@@ -1,0 +1,20 @@
+<h2>Rope</h2>
+<html>
+ <head></head>
+ <body>
+  <p>You’re given a string with no more than 1000 Latin characters and the commands of two types:</p> 
+  <ul> 
+   <li>cut the string by given index and merge it back together in a different order. For example, given the index is 2 and the string is "example", first it is broken into "ex" and "ample", and then glued back again as "ampleex";</li> 
+   <li>reverse the whole string. If we reverse "example", we get "elpmaxe".</li> 
+  </ul> 
+  <p>These commands may be performed multiple times. Your task is to print the resulting string after performing all operations.</p> 
+  <p><u>Input: </u>The first line is the given string. The second line is <span class="math-tex">\(N\)</span> – the number of commands. In the following <span class="math-tex">\(N\)</span> lines are commands.</p> 
+  <ul> 
+   <li>split index – split the string by index ‘index’ and invert the pieces;</li> 
+   <li>reverse – reverse the string.</li> 
+  </ul> 
+  <p><u>Output:</u> print the resulting string after all operations.</p> 
+  <p><u>Addition:</u> please try to complete this task by using the doubly linked list.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">abcd<br>3<br>split 1<br>reverse<br>split 1<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">dcba<br></code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+<a href="https://hyperskill.org/learn/step/8290">Show topic summary</a>

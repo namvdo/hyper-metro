@@ -1,0 +1,730 @@
+type: edu
+files:
+- name: src/Main.java
+  visible: true
+  text: |+
+    import java.io.BufferedReader;
+    import java.io.File;
+    import java.io.FileReader;
+    import java.io.IOException;
+    import java.util.LinkedList;
+    import java.util.List;
+    import java.util.logging.Logger;
+
+    public class Main {
+        private static Logger logger = Logger.getLogger(Main.class.getName());
+        public static List<String> readFromFile(String fileName) {
+            String path = new File(fileName).getAbsolutePath();
+            logger.info(path);
+            List<String> list = new LinkedList<>();
+            try (FileReader reader = new FileReader(fileName);
+                 BufferedReader bufferedReader = new BufferedReader(reader)) {
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    list.add(line);
+                }
+                return list;
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("error");
+            }
+            return new LinkedList<>();
+        }
+        public static void main(String[] args) {
+            String fileName = args[0];
+            List<String> list = readFromFile(fileName);
+            assert list != null;
+            int idx = 0;
+            while (idx != list.size()) {
+                if (idx == 0) {
+                    System.out.println("depot - " + list.get(0)  + " - " + list.get(1));
+                } else if (idx == list.size() - 1) {
+                    System.out.println(list.get(list.size() - 2) + " - " + list.get(list.size() - 1) + " - " + "depot");
+                } else {
+                    System.out.println(list.get(idx - 1) + " - " + list.get(idx) +  " - " + list.get(idx + 1));
+                }
+                idx++;
+            }
+        }
+    }
+
+  learner_created: false
+- name: src/example-file.txt
+  visible: true
+  text: |-
+    Bishops road
+    Edgver road
+    Baker street
+    Portland road
+    Gower street
+    Kings cross
+    Farringdon street
+  learner_created: false
+- name: test/Tests.java
+  visible: false
+  text: |-
+    import org.hyperskill.hstest.dynamic.input.DynamicTestingMethod;
+    import org.hyperskill.hstest.exception.outcomes.WrongAnswer;
+    import org.hyperskill.hstest.stage.StageTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testing.TestedProgram;
+
+    public class Tests extends StageTest<String> {
+        // test from the previous stage with one line
+        @DynamicTestingMethod
+        CheckResult test1() {
+
+            TestedProgram main = new TestedProgram(Main.class);
+            main.start("./test/baltimore.json");
+            String output = main.execute("/output \"SubwayLink\"").trim();
+
+            checkDepots(output);
+            checkOutputLength(output, 16);
+            assertStations(output, new String[]{"Owings Mills", "Old Court", "Milford Mill", "Reiserstown Plaza",
+                "Rogers Avenue", "West Cold Spring", "Mondawmin", "Penn North", "Uptown", "State Center",
+                "Lexington Market", "Charles Center", "Shot Tower/Market Place", "Johns Hopkins Hospital"});
+
+            return CheckResult.correct();
+        }
+
+        // test of example
+        @DynamicTestingMethod
+        CheckResult test2() {
+
+            TestedProgram main = new TestedProgram(Main.class);
+            main.start("./test/lausanne.json");
+            String output = main.execute("/output \"m1\"").trim();
+
+            checkDepots(output);
+            checkOutputLength(output, 17);
+            assertStations(output, new String[]{"Renes—Gare", "Epenex", "Crochy", "Cerisaie",
+                "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
+                "Provence", "Montelly", "Vigie", "Lausanne—Flon"});
+
+            output = main.execute("/output \"m2\"");
+            checkDepots(output);
+            checkOutputLength(output, 16);
+            assertStations(output, new String[]{"Croisettes", "Vennes", "Fourmi", "Sallaz", "CHUV", "Ours",
+                "Riponne M.Bejart", "Bessieres", "Lausanne—Flon", "Lausanne Gare CFF", "Grancy", "Delices", "Jourdils",
+                "Ouchy—Olympique"});
+
+            return CheckResult.correct();
+        }
+
+        // example test pt.2 (with addition)
+        @DynamicTestingMethod
+        CheckResult test2_1() {
+
+            TestedProgram main = new TestedProgram(Main.class);
+            main.start("./test/lausanne.json");
+
+            // added a station to the end of the line
+            main.execute("/append \"m1\" \"Test station 1\"");
+            String output = main.execute("/output \"m1\"");
+
+            checkDepots(output);
+            checkOutputLength(output, 18);
+            assertStations(output, new String[]{"Renes—Gare", "Epenex", "Crochy", "Cerisaie",
+                "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
+                "Provence", "Montelly", "Vigie", "Lausanne—Flon", "Test station 1"});
+
+            // added another one
+            main.execute("/append \"m1\" \"Test station 2\"");
+            output = main.execute("/output \"m1\"");
+
+            checkDepots(output);
+            checkOutputLength(output, 19);
+            assertStations(output, new String[]{"Renes—Gare", "Epenex", "Crochy", "Cerisaie",
+                "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
+                "Provence", "Montelly", "Vigie", "Lausanne—Flon", "Test station 1", "Test station 2"});
+
+            // added one station to the beginning of the line
+            main.execute("/add-head \"m1\" \"Head\"");
+            output = main.execute("/output \"m1\"");
+
+            checkDepots(output);
+            checkOutputLength(output, 20);
+            assertStations(output, new String[]{"Head", "Renes—Gare", "Epenex", "Crochy", "Cerisaie",
+                "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
+                "Provence", "Montelly", "Vigie", "Lausanne—Flon", "Test station 1", "Test station 2"});
+
+            return CheckResult.correct();
+        }
+
+        // not existing file check
+        @DynamicTestingMethod
+        CheckResult test4() {
+            TestedProgram main = new TestedProgram(Main.class);
+            String output = main.start("tHiS_fIlE_DoEs_nOt_ExIsT.txt");
+            if (output.trim().length() == 0) {
+                return CheckResult.wrong("The program did not print anything when the file was not exist. ");
+            }
+            if (output.toLowerCase().startsWith("depot") || output.toLowerCase().endsWith("depot")) {
+                return CheckResult.wrong("It looks like the program did not print an error message when the file was not exist.");
+            }
+            return CheckResult.correct();
+        }
+
+        // test of a case from the example
+        @DynamicTestingMethod
+        CheckResult test5() {
+
+            TestedProgram main = new TestedProgram(Main.class);
+            main.start("./test/prague.json");
+
+            String[][] stations = new String[][]{
+                {"Nemocnice Motol", null}, {"Petriny", null}, {"Nadrazi Veleslavin", null}, {"Borislavka", null},
+                {"Dejvicka", null}, {"Hradcanska", null}, {"Malostranska", null}, {"Staromestska", null},
+                {"Mustek", "Linka B"}, {"Muzeum", "Linka C"}, {"Namesti Miru", null}, {"Jiriho z Podebrad", null},
+                {"Flora", null}, {"Zelivskeho", null}, {"Strasnicka", null}, {"Skalka", null}, {"Depo Hostivar", null}
+            };
+
+            String output = main.execute("/output \"Linka A\"");
+            checkDepots(output);
+            checkOutputLength(output, 19);
+            assertWithTransfer(output, stations);
+
+            return CheckResult.correct();
+        }
+
+        @DynamicTestingMethod
+        CheckResult test6() {
+
+            TestedProgram main = new TestedProgram(Main.class);
+            main.start("./test/prague.json");
+
+            String[][] stations = new String[][]{{"Nemocnice Motol", null}, {"Petriny", "Linka C"},
+                {"Nadrazi Veleslavin", null}, {"Borislavka", null}, {"Dejvicka", null}, {"Hradcanska", null},
+                {"Malostranska", null}, {"Staromestska", null}, {"Mustek", "Linka B"}, {"Muzeum", "Linka C"},
+                {"Namesti Miru", null}, {"Jiriho z Podebrad", null}, {"Flora", null}, {"Zelivskeho", null},
+                {"Strasnicka", null}, {"Skalka", null}, {"Depo Hostivar", null}};
+
+            main.execute("/connect \"Linka C\" \"I.P.Pavlova\" \"Linka A\" \"Petriny\"");
+
+            String output = main.execute("/output \"Linka A\"");
+            checkDepots(output);
+            checkOutputLength(output, 19);
+            assertWithTransfer(output, stations);
+
+            return CheckResult.correct();
+        }
+
+        // checks for "depot" at the start and at the end
+        void checkDepots(String output) {
+            output = output.trim().toLowerCase();
+            if (!output.startsWith("depot")) {
+                throw new WrongAnswer("Your output should start with 'depot'.");
+            } else if (!output.endsWith("depot")) {
+                throw new WrongAnswer("Your output should end with 'depot'.");
+            }
+        }
+
+        // checks number of stations in output
+        void checkOutputLength(String output, int correctLength) {
+            int length = output.trim().split("\n").length;
+            if (length != correctLength) {
+                throw new WrongAnswer("You output contains wrong number of lines.\n" +
+                    "Expected: " + correctLength + " lines\n" +
+                    "Your output: " + length + " lines");
+            }
+        }
+
+        // checks stations
+        void assertStations(String output, String[] stations) {
+
+            String[] sOutput = output.trim().split("\n");
+
+            for (int i = 0; i < stations.length; i++) {
+                if (!sOutput[i + 1].equals(stations[i])) {
+                    throw new WrongAnswer("Can't find station '" + stations[i] + "' in the line number " + (i + 2));
+                }
+            }
+        }
+
+        void assertWithTransfer(String output, String[][] stations) {
+
+            String[] sOutput = output.split("\n");
+
+            for (int i = 0; i < stations.length; i++) {
+                String currentLine = sOutput[i + 1].toLowerCase().trim();
+                String currentStation = stations[i][0];
+                String currentTransfer = stations[i][1];
+                if (currentTransfer == null) {
+                    if (!currentLine.equals(currentStation.toLowerCase())) {
+                        throw new WrongAnswer("There is an error in your program's reply. Some stations were not found.");
+                    }
+                } else if (!currentLine.contains(currentStation.toLowerCase()) ||
+                    !currentLine.contains(currentTransfer.toLowerCase())) {
+                    throw new WrongAnswer("Expected transfer to '" + currentTransfer + "' from '" + currentStation + "' station.");
+                }
+            }
+        }
+    }
+  learner_created: false
+- name: test/baltimore.json
+  visible: false
+  text: |-
+    {
+      "SubwayLink": {
+        "1": {
+          "name": "Owings Mills",
+          "transfer": null
+        },
+        "2": {
+          "name": "Old Court",
+          "transfer": null
+        },
+        "3": {
+          "name": "Milford Mill",
+          "transfer": null
+        },
+        "4": {
+          "name": "Reiserstown Plaza",
+          "transfer": null
+        },
+        "5": {
+          "name": "Rogers Avenue",
+          "transfer": null
+        },
+        "6": {
+          "name": "West Cold Spring",
+          "transfer": null
+        },
+        "7": {
+          "name": "Mondawmin",
+          "transfer": null
+        },
+        "8": {
+          "name": "Penn North",
+          "transfer": null
+        },
+        "9": {
+          "name": "Uptown",
+          "transfer": null
+        },
+        "10": {
+          "name": "State Center",
+          "transfer": null
+        },
+        "11": {
+          "name": "Lexington Market",
+          "transfer": null
+        },
+        "12": {
+          "name": "Charles Center",
+          "transfer": null
+        },
+        "13": {
+          "name": "Shot Tower/Market Place",
+          "transfer": null
+        },
+        "14": {
+          "name": "Johns Hopkins Hospital",
+          "transfer": null
+        }
+      }
+    }
+  learner_created: false
+- name: test/lausanne.json
+  visible: false
+  text: |-
+    {
+      "m1": {
+        "1": {
+          "name": "Renes—Gare",
+          "transfer": null
+        },
+        "2": {
+          "name": "Epenex",
+          "transfer": null
+        },
+        "3": {
+          "name": "Crochy",
+          "transfer": null
+        },
+        "4": {
+          "name": "Cerisaie",
+          "transfer": null
+        },
+        "5": {
+          "name": "Bassenges",
+          "transfer": null
+        },
+        "6": {
+          "name": "EPFL",
+          "transfer": null
+        },
+        "7": {
+          "name": "UNL—Sorge",
+          "transfer": null
+        },
+        "8": {
+          "name": "Mouline",
+          "transfer": null
+        },
+        "9": {
+          "name": "UNL—Chemberonne",
+          "transfer": null
+        },
+        "10": {
+          "name": "Bourdonnette",
+          "transfer": null
+        },
+        "11": {
+          "name": "Melley",
+          "transfer": null
+        },
+        "12": {
+          "name": "Provence",
+          "transfer": null
+        },
+        "13": {
+          "name": "Montelly",
+          "transfer": null
+        },
+        "14": {
+          "name": "Vigie",
+          "transfer": null
+        },
+        "15": {
+          "name": "Lausanne—Flon",
+          "transfer": null
+        }
+      },
+      "m2": {
+        "1": {
+          "name": "Croisettes",
+          "transfer": null
+        },
+        "2": {
+          "name": "Vennes",
+          "transfer": null
+        },
+        "3": {
+          "name": "Fourmi",
+          "transfer": null
+        },
+        "4": {
+          "name": "Sallaz",
+          "transfer": null
+        },
+        "5": {
+          "name": "CHUV",
+          "transfer": null
+        },
+        "6": {
+          "name": "Ours",
+          "transfer": null
+        },
+        "7": {
+          "name": "Riponne M.Bejart",
+          "transfer": null
+        },
+        "8": {
+          "name": "Bessieres",
+          "transfer": null
+        },
+        "9": {
+          "name": "Lausanne—Flon",
+          "transfer": null
+        },
+        "10": {
+          "name": "Lausanne Gare CFF",
+          "transfer": null
+        },
+        "11": {
+          "name": "Grancy",
+          "transfer": null
+        },
+        "12": {
+          "name": "Delices",
+          "transfer": null
+        },
+        "13": {
+          "name": "Jourdils",
+          "transfer": null
+        },
+        "14": {
+          "name": "Ouchy—Olympique",
+          "transfer": null
+        }
+      }
+    }
+  learner_created: false
+- name: test/prague.json
+  visible: false
+  text: |-
+    {
+      "Linka A": {
+        "1": {
+          "name": "Nemocnice Motol" ,
+          "transfer": null
+        } ,
+        "2": {
+          "name": "Petriny" ,
+          "transfer": null
+        } ,
+        "3": {
+          "name": "Nadrazi Veleslavin" ,
+          "transfer": null
+        } ,
+        "4": {
+          "name": "Borislavka" ,
+          "transfer": null
+        } ,
+        "5": {
+          "name": "Dejvicka" ,
+          "transfer": null
+        } ,
+        "6": {
+          "name": "Hradcanska" ,
+          "transfer": null
+        } ,
+        "7": {
+          "name": "Malostranska" ,
+          "transfer": null
+        } ,
+        "8": {
+          "name": "Staromestska" ,
+          "transfer": null
+          } ,
+          "9": {
+          "name": "Mustek" ,
+          "transfer": {
+            "line": "Linka B" ,
+            "station": "Mustek"
+          }
+        } ,
+        "10": {
+          "name": "Muzeum" ,
+          "transfer": {
+            "line": "Linka C" ,
+            "station": "Muzeum"
+          }
+        } ,
+        "11": {
+          "name": "Namesti Miru" ,
+          "transfer": null
+        } ,
+        "12": {
+          "name": "Jiriho z Podebrad" ,
+          "transfer": null
+        } ,
+        "13": {
+          "name": "Flora" ,
+          "transfer": null
+        } ,
+        "14": {
+          "name": "Zelivskeho" ,
+          "transfer": null
+        } ,
+        "15": {
+          "name": "Strasnicka" ,
+          "transfer": null
+        } ,
+        "16": {
+          "name": "Skalka" ,
+          "transfer": null
+        } ,
+        "17": {
+          "name": "Depo Hostivar" ,
+          "transfer": null
+        }
+      } ,
+      "Linka B": {
+        "1": {
+          "name": "Cerny Most" ,
+          "transfer": null
+        } ,
+        "2": {
+          "name": "Rajska zahrada" ,
+          "transfer": null
+        } ,
+        "3": {
+          "name": "Hloubetin" ,
+          "transfer": null
+        } ,
+        "4": {
+          "name": "Kolbenova" ,
+          "transfer": null
+        } ,
+        "5": {
+          "name": "Vysocanska" ,
+          "transfer": null
+        } ,
+        "6": {
+          "name": "Ceskomoravska" ,
+          "transfer": null
+        } ,
+        "7": {
+          "name": "Palmovka" ,
+          "transfer": null
+        } ,
+        "8": {
+          "name": "Invalidovna" ,
+          "transfer": null
+        } ,
+        "9": {
+          "name": "Krizikova" ,
+          "transfer": null
+        } ,
+        "10": {
+          "name": "Florenc" ,
+          "transfer": {
+            "line": "Linka C" ,
+            "station": "Florenc"
+          }
+        } ,
+        "11": {
+          "name": "Namesti Republiky" ,
+          "transfer": null
+        } ,
+        "12": {
+          "name": "Mustek" ,
+          "transfer": {
+            "line": "Linka B" ,
+            "station": "Mustek"
+          }
+        } ,
+        "13": {
+          "name": "Narodni trida" ,
+          "transfer": null
+        } ,
+        "14": {
+          "name": "Karlovo namesti" ,
+          "transfer": null
+        } ,
+        "15": {
+          "name": "Andel" ,
+          "transfer": null
+        } ,
+        "16": {
+          "name": "Smichovske nadrazi" ,
+          "transfer": null
+        } ,
+        "17": {
+          "name": "Radlicka" ,
+          "transfer": null
+        } ,
+        "18": {
+          "name": "Jinonice" ,
+          "transfer": null
+        } ,
+        "19": {
+          "name": "Nove Butovice" ,
+          "transfer": null
+        } ,
+        "20": {
+          "name": "Hurka" ,
+          "transfer": null
+        } ,
+        "21": {
+          "name": "Luziny" ,
+          "transfer": null
+        } ,
+        "22": {
+          "name": "Luka" ,
+          "transfer": null
+        } ,
+        "23": {
+          "name": "Stodulky" ,
+          "transfer": null
+        } ,
+        "24": {
+          "name": "Zlicin" ,
+          "transfer": null
+        }
+      } ,
+      "Linka C": {
+        "1": {
+          "name": "Letnany" ,
+          "transfer": null
+        } ,
+        "2": {
+          "name": "Prosek" ,
+          "transfer": null
+        } ,
+        "3": {
+          "name": "Strizkov" ,
+          "transfer": null
+        } ,
+        "4": {
+          "name": "Ladvi" ,
+          "transfer": null
+        } ,
+        "5": {
+          "name": "Kobylisy" ,
+          "transfer": null
+        } ,
+        "6": {
+          "name": "Nadrazi Holesovice" ,
+          "transfer": null
+        } ,
+        "7": {
+          "name": "Vltavska" ,
+          "transfer": null
+        } ,
+        "8": {
+          "name": "Florenc" ,
+          "transfer": {
+            "line": "Linka B" ,
+            "station": "Florenc"
+          }
+        } ,
+        "9": {
+          "name": "Hlavni nadrazi" ,
+          "transfer": null
+        } ,
+        "10": {
+          "name": "Muzeum" ,
+          "transfer": {
+            "line": "Linka A" ,
+            "station": "Muzeum"
+          }
+        } ,
+        "11": {
+          "name": "I.P.Pavlova" ,
+          "transfer": null
+        } ,
+        "12": {
+          "name": "Vysehrad" ,
+          "transfer": null
+        } ,
+        "13": {
+          "name": "Prazskeho povstani" ,
+          "transfer": null
+        } ,
+        "14": {
+          "name": "Pankrac" ,
+          "transfer": null
+        } ,
+        "15": {
+          "name": "Budejovicka" ,
+          "transfer": null
+        } ,
+        "16": {
+          "name": "Kacerov" ,
+          "transfer": null
+        } ,
+        "17": {
+          "name": "Roztyly" ,
+          "transfer": null
+        } ,
+        "18": {
+          "name": "Chodov" ,
+          "transfer": null
+        } ,
+        "19": {
+          "name": "Opatov" ,
+          "transfer": null
+        } ,
+        "20": {
+          "name": "Haje" ,
+          "transfer": null
+        }
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/120/stages/650/implement
+status: Unchecked
+record: -1
