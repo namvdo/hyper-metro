@@ -1,0 +1,14 @@
+
+0
+java:S1220""Move this file to a named package.
+X	java:S125c"<This block of commented-out lines of code should be removed.(ÃÂüí8ÄÖò¦ê.
+t
+java:S3776&"RRefactor this method to reduce its Cognitive Complexity from 29 to the 15 allowed.(‡ ·Äøÿÿÿÿ8ÛÂ¥ê.
+a
+java:S18549"?Remove this useless assignment to local variable "nextStation".(¡Û®ôÿÿÿÿÿ8·Íî¦ê.
+a
+java:S1854J"?Remove this useless assignment to local variable "prevStation".(ƒŒõ“þÿÿÿÿ8³ùë¦ê.
+X	java:S125M"<This block of commented-out lines of code should be removed.(Ì…ìË8³ùë¦ê.
+X	java:S125A"<This block of commented-out lines of code should be removed.(ÃÂüí8·Íî¦ê.
+‘
+java:S2234"nParameters to addInterChangeStationsHelper have the same names but not the same order as the method arguments.(†µˆÛþÿÿÿÿ8ÕžÃ¥ê.

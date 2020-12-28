@@ -1,12 +1,5 @@
 
-T
-java:S1128"7Remove this unused import 'com.google.gson.JsonObject'.(µÊ´½8œ–“ðé.
-\
-java:S11186":Add a private constructor to hide the implicit public one.(ƒÝòìüÿÿÿÿ8†å¯ðé.
-M
-java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8ÌŠ„ðé.
-N	java:S106"9Replace this use of System.out or System.err by a logger.(õˆˆ”
-E
-java:S1068"(Remove this unused "line" private field.(Éªö¿8¢‡™ðé.
+U	java:S106"9Replace this use of System.out or System.err by a logger.(öØÈ¢8¡ðºœê.
 0
 java:S1220""Move this file to a named package.
+Z	java:S106&"9Replace this use of System.out or System.err by a logger.(Š°ù¾ùÿÿÿÿ8¡ðºœê.

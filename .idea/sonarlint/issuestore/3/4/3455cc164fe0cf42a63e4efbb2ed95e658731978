@@ -1,0 +1,7 @@
+
+0
+java:S1220""Move this file to a named package.
+X	java:S125J"<This block of commented-out lines of code should be removed.(Î±òÁ8þ¸Ž¨ê.
+U	java:S1061"9Replace this use of System.out or System.err by a logger.(Ì§Ñá8ÎáÄ¥ê.
+y
+java:S2629""\Invoke method(s) only conditionally. Use the built-in formatting to construct this argument.(‚À°¹8¡Ý›§ê.

@@ -1,0 +1,270 @@
+{
+  "Linka A": {
+    "1": {
+      "name": "Nemocnice Motol" ,
+      "transfer": null
+    } ,
+    "2": {
+      "name": "Petriny" ,
+      "transfer": null
+    } ,
+    "3": {
+      "name": "Nadrazi Veleslavin" ,
+      "transfer": null
+    } ,
+    "4": {
+      "name": "Borislavka" ,
+      "transfer": null
+    } ,
+    "5": {
+      "name": "Dejvicka" ,
+      "transfer": null
+    } ,
+    "6": {
+      "name": "Hradcanska" ,
+      "transfer": null
+    } ,
+    "7": {
+      "name": "Malostranska" ,
+      "transfer": null
+    } ,
+    "8": {
+      "name": "Staromestska" ,
+      "transfer": null
+      } ,
+      "9": {
+      "name": "Mustek" ,
+      "transfer": {
+        "line": "Linka B" ,
+        "station": "Muste k"
+      }
+    } ,
+    "10": {
+      "name": "Muzeum" ,
+      "transfer": {
+        "line": "Linka C" ,
+        "station": "Muzeum"
+      }
+    } ,
+    "11": {
+      "name": "Namesti Miru" ,
+      "transfer": null
+    } ,
+    "12": {
+      "name": "Jiriho z Podebrad" ,
+      "transfer": null
+    } ,
+    "13": {
+      "name": "Flora" ,
+      "transfer": null
+    } ,
+    "14": {
+      "name": "Zelivskeho" ,
+      "transfer": null
+    } ,
+    "15": {
+      "name": "Strasnicka" ,
+      "transfer": null
+    } ,
+    "16": {
+      "name": "Skalka" ,
+      "transfer": null
+    } ,
+    "17": {
+      "name": "Depo Hostivar" ,
+      "transfer": null
+    }
+  } ,
+  "Linka B": {
+    "1": {
+      "name": "Cerny Most" ,
+      "transfer": null
+    } ,
+    "2": {
+      "name": "Rajska zahrada" ,
+      "transfer": null
+    } ,
+    "3": {
+      "name": "Hloubetin" ,
+      "transfer": null
+    } ,
+    "4": {
+      "name": "Kolbenova" ,
+      "transfer": null
+    } ,
+    "5": {
+      "name": "Vysocanska" ,
+      "transfer": null
+    } ,
+    "6": {
+      "name": "Ceskomoravska" ,
+      "transfer": null
+    } ,
+    "7": {
+      "name": "Palmovka" ,
+      "transfer": null
+    } ,
+    "8": {
+      "name": "Invalidovna" ,
+      "transfer": null
+    } ,
+    "9": {
+      "name": "Krizikova" ,
+      "transfer": null
+    } ,
+    "10": {
+      "name": "Florenc" ,
+      "transfer": {
+        "line": "Linka C" ,
+        "station": "Florenc"
+      }
+    } ,
+    "11": {
+      "name": "Namesti Republiky" ,
+      "transfer": null
+    } ,
+    "12": {
+      "name": "Mustek" ,
+      "transfer": {
+        "line": "Linka B" ,
+        "station": "Mustek"
+      }
+    } ,
+    "13": {
+      "name": "Narodni trida" ,
+      "transfer": null
+    } ,
+    "14": {
+      "name": "Karlovo namesti" ,
+      "transfer": null
+    } ,
+    "15": {
+      "name": "Andel" ,
+      "transfer": null
+    } ,
+    "16": {
+      "name": "Smichovske nadrazi" ,
+      "transfer": null
+    } ,
+    "17": {
+      "name": "Radlicka" ,
+      "transfer": null
+    } ,
+    "18": {
+      "name": "Jinonice" ,
+      "transfer": null
+    } ,
+    "19": {
+      "name": "Nove Butovice" ,
+      "transfer": null
+    } ,
+    "20": {
+      "name": "Hurka" ,
+      "transfer": null
+    } ,
+    "21": {
+      "name": "Luziny" ,
+      "transfer": null
+    } ,
+    "22": {
+      "name": "Luka" ,
+      "transfer": null
+    } ,
+    "23": {
+      "name": "Stodulky" ,
+      "transfer": null
+    } ,
+    "24": {
+      "name": "Zlicin" ,
+      "transfer": null
+    }
+  } ,
+  "Linka C": {
+    "1": {
+      "name": "Letnany" ,
+      "transfer": null
+    } ,
+    "2": {
+      "name": "Prosek" ,
+      "transfer": null
+    } ,
+    "3": {
+      "name": "Strizkov" ,
+      "transfer": null
+    } ,
+    "4": {
+      "name": "Ladvi" ,
+      "transfer": null
+    } ,
+    "5": {
+      "name": "Kobylisy" ,
+      "transfer": null
+    } ,
+    "6": {
+      "name": "Nadrazi Holesovice" ,
+      "transfer": null
+    } ,
+    "7": {
+      "name": "Vltavska" ,
+      "transfer": null
+    } ,
+    "8": {
+      "name": "Florenc" ,
+      "transfer": {
+        "line": "Linka B" ,
+        "station": "Florenc"
+      }
+    } ,
+    "9": {
+      "name": "Hlavni nadrazi" ,
+      "transfer": null
+    } ,
+    "10": {
+      "name": "Muzeum" ,
+      "transfer": {
+        "line": "Linka A" ,
+        "station": "Muzeum"
+      }
+    } ,
+    "11": {
+      "name": "I.P.Pavlova" ,
+      "transfer": null
+    } ,
+    "12": {
+      "name": "Vysehrad" ,
+      "transfer": null
+    } ,
+    "13": {
+      "name": "Prazskeho povstani" ,
+      "transfer": null
+    } ,
+    "14": {
+      "name": "Pankrac" ,
+      "transfer": null
+    } ,
+    "15": {
+      "name": "Budejovicka" ,
+      "transfer": null
+    } ,
+    "16": {
+      "name": "Kacerov" ,
+      "transfer": null
+    } ,
+    "17": {
+      "name": "Roztyly" ,
+      "transfer": null
+    } ,
+    "18": {
+      "name": "Chodov" ,
+      "transfer": null
+    } ,
+    "19": {
+      "name": "Opatov" ,
+      "transfer": null
+    } ,
+    "20": {
+      "name": "Haje" ,
+      "transfer": null
+    }
+  }
+}

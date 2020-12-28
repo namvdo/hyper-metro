@@ -49,17 +49,6 @@ files:
     }
 
   learner_created: false
-- name: src/example-file.txt
-  visible: true
-  text: |-
-    Bishops road
-    Edgver road
-    Baker street
-    Portland road
-    Gower street
-    Kings cross
-    Farringdon street
-  learner_created: false
 - name: test/Tests.java
   visible: false
   text: |-
@@ -725,6 +714,41 @@ files:
       }
     }
   learner_created: false
+- name: src/test.json
+  visible: true
+  text: |-
+    {
+      "SubwayLink": {
+        "1": "Owings Mills",
+        "2": "Old Court",
+        "3": "Milford Mill",
+        "4": "Reiserstown Plaza",
+        "5": "Rogers Avenue",
+        "6": "West Cold Spring",
+        "7": "Mondawmin",
+        "8": "Penn North",
+        "9": "Uptown",
+        "10": "State Center",
+        "11": "Lexington Market",
+        "12": "Charles Center",
+        "13": "Shot Tower/Market Place",
+        "14": "Johns Hopkins Hospital"
+      }
+    }
+  learner_created: true
+- name: src/Util.java
+  visible: true
+  learner_created: true
+- name: src/MetroUtil.java
+  visible: true
+  learner_created: true
+- name: src/Metro.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/120/stages/650/implement
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/120/stages/650/implement">JetBrains
+    Academy</a>
+  time: Mon, 28 Dec 2020 05:13:21 UTC
 record: -1

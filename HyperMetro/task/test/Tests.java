@@ -8,16 +8,16 @@ public class Tests extends StageTest<String> {
     // test from the previous stage with one line
     @DynamicTestingMethod
     CheckResult test1() {
+
         TestedProgram main = new TestedProgram(Main.class);
         main.start("./test/baltimore.json");
-
         String output = main.execute("/output \"SubwayLink\"").trim();
-        checkDepots(output);
-        checkOutputLength(output, 14);
 
+        checkDepots(output);
+        checkOutputLength(output, 16);
         assertStations(output, new String[]{"Owings Mills", "Old Court", "Milford Mill", "Reiserstown Plaza",
-                "Rogers Avenue", "West Cold Spring", "Mondawmin", "Penn North", "Uptown", "State Center",
-                "Lexington Market", "Charles Center", "Shot Tower/Market Place", "Johns Hopkins Hospital"});
+            "Rogers Avenue", "West Cold Spring", "Mondawmin", "Penn North", "Uptown", "State Center",
+            "Lexington Market", "Charles Center", "Shot Tower/Market Place", "Johns Hopkins Hospital"});
 
         return CheckResult.correct();
     }
@@ -25,25 +25,23 @@ public class Tests extends StageTest<String> {
     // test of example
     @DynamicTestingMethod
     CheckResult test2() {
+
         TestedProgram main = new TestedProgram(Main.class);
         main.start("./test/lausanne.json");
-
         String output = main.execute("/output \"m1\"").trim();
+
         checkDepots(output);
-
-        checkOutputLength(output, 15);
-
+        checkOutputLength(output, 17);
         assertStations(output, new String[]{"Renes—Gare", "Epenex", "Crochy", "Cerisaie",
-                "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
-                "Provence", "Montelly", "Vigie", "Lausanne—Flon"});
+            "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
+            "Provence", "Montelly", "Vigie", "Lausanne—Flon"});
 
         output = main.execute("/output \"m2\"");
         checkDepots(output);
-        checkOutputLength(output, 14);
-
+        checkOutputLength(output, 16);
         assertStations(output, new String[]{"Croisettes", "Vennes", "Fourmi", "Sallaz", "CHUV", "Ours",
-                "Riponne M.Bejart", "Bessieres", "Lausanne—Flon", "Lausanne Gare CFF", "Grancy", "Delices", "Jourdils",
-                "Ouchy—Olympique"});
+            "Riponne M.Bejart", "Bessieres", "Lausanne—Flon", "Lausanne Gare CFF", "Grancy", "Delices", "Jourdils",
+            "Ouchy—Olympique"});
 
         return CheckResult.correct();
     }
@@ -51,6 +49,7 @@ public class Tests extends StageTest<String> {
     // example test pt.2 (with addition)
     @DynamicTestingMethod
     CheckResult test2_1() {
+
         TestedProgram main = new TestedProgram(Main.class);
         main.start("./test/lausanne.json");
 
@@ -59,30 +58,30 @@ public class Tests extends StageTest<String> {
         String output = main.execute("/output \"m1\"");
 
         checkDepots(output);
-        checkOutputLength(output, 16);
+        checkOutputLength(output, 18);
         assertStations(output, new String[]{"Renes—Gare", "Epenex", "Crochy", "Cerisaie",
-                "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
-                "Provence", "Montelly", "Vigie", "Lausanne—Flon", "Test station 1"});
+            "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
+            "Provence", "Montelly", "Vigie", "Lausanne—Flon", "Test station 1"});
 
         // added another one
         main.execute("/append \"m1\" \"Test station 2\"");
         output = main.execute("/output \"m1\"");
 
         checkDepots(output);
-        checkOutputLength(output, 17);
+        checkOutputLength(output, 19);
         assertStations(output, new String[]{"Renes—Gare", "Epenex", "Crochy", "Cerisaie",
-                "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
-                "Provence", "Montelly", "Vigie", "Lausanne—Flon", "Test station 1", "Test station 2"});
+            "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
+            "Provence", "Montelly", "Vigie", "Lausanne—Flon", "Test station 1", "Test station 2"});
 
         // added one station to the beginning of the line
         main.execute("/add-head \"m1\" \"Head\"");
         output = main.execute("/output \"m1\"");
 
         checkDepots(output);
-        checkOutputLength(output, 18);
+        checkOutputLength(output, 20);
         assertStations(output, new String[]{"Head", "Renes—Gare", "Epenex", "Crochy", "Cerisaie",
-                "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
-                "Provence", "Montelly", "Vigie", "Lausanne—Flon", "Test station 1", "Test station 2"});
+            "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
+            "Provence", "Montelly", "Vigie", "Lausanne—Flon", "Test station 1", "Test station 2"});
 
         return CheckResult.correct();
     }
@@ -91,45 +90,56 @@ public class Tests extends StageTest<String> {
     @DynamicTestingMethod
     CheckResult test4() {
         TestedProgram main = new TestedProgram(Main.class);
-        String output = main.start("tHiS_fIlE_DoEs_nOt_ExIsT.txt").toLowerCase();
-
+        String output = main.start("tHiS_fIlE_DoEs_nOt_ExIsT.txt");
         if (output.trim().length() == 0) {
-            return CheckResult.wrong("The program did not print anything when the file that doesn't exist was passed.");
+            return CheckResult.wrong("The program did not print anything when the file was not exist. ");
         }
-        if (output.startsWith("depot") || output.endsWith("depot") || !output.contains("error")) {
-            return CheckResult.wrong("It looks like the program did not print an error message when the file that doesn't exist was passed.\n" +
-                "Your output should contain 'error'.");
+        if (output.toLowerCase().startsWith("depot") || output.toLowerCase().endsWith("depot")) {
+            return CheckResult.wrong("It looks like the program did not print an error message when the file was not exist.");
         }
+        return CheckResult.correct();
+    }
+
+    // test of a case from the example
+    @DynamicTestingMethod
+    CheckResult test5() {
+
+        TestedProgram main = new TestedProgram(Main.class);
+        main.start("./test/prague.json");
+
+        String[][] stations = new String[][]{
+            {"Nemocnice Motol", null}, {"Petriny", null}, {"Nadrazi Veleslavin", null}, {"Borislavka", null},
+            {"Dejvicka", null}, {"Hradcanska", null}, {"Malostranska", null}, {"Staromestska", null},
+            {"Mustek", "Linka B"}, {"Muzeum", "Linka C"}, {"Namesti Miru", null}, {"Jiriho z Podebrad", null},
+            {"Flora", null}, {"Zelivskeho", null}, {"Strasnicka", null}, {"Skalka", null}, {"Depo Hostivar", null}
+        };
+
+        String output = main.execute("/output \"Linka A\"");
+        checkDepots(output);
+        checkOutputLength(output, 19);
+        assertWithTransfer(output, stations);
 
         return CheckResult.correct();
     }
 
-    // additional test case
     @DynamicTestingMethod
-    CheckResult test5() {
+    CheckResult test6() {
+
         TestedProgram main = new TestedProgram(Main.class);
-        main.start("./test/samara.json");
+        main.start("./test/prague.json");
 
-        main.execute("/append \"line 1\" \"Krylya Sovetov\"");
-        String output = main.execute("/output \"line 1\"");
+        String[][] stations = new String[][]{{"Nemocnice Motol", null}, {"Petriny", "Linka C"},
+            {"Nadrazi Veleslavin", null}, {"Borislavka", null}, {"Dejvicka", null}, {"Hradcanska", null},
+            {"Malostranska", null}, {"Staromestska", null}, {"Mustek", "Linka B"}, {"Muzeum", "Linka C"},
+            {"Namesti Miru", null}, {"Jiriho z Podebrad", null}, {"Flora", null}, {"Zelivskeho", null},
+            {"Strasnicka", null}, {"Skalka", null}, {"Depo Hostivar", null}};
 
+        main.execute("/connect \"Linka C\" \"I.P.Pavlova\" \"Linka A\" \"Petriny\"");
+
+        String output = main.execute("/output \"Linka A\"");
         checkDepots(output);
-
-        checkOutputLength(output, 11);
-
-        assertStations(output, new String[]{"Alabinskaya", "Rossiyskaya", "Moskovskaya",
-                "Gagarinskaya", "Sportivnaya", "Sovetskaya", "Pobeda", "Bezymyanka", "Kirovskaya", "Yungorodok",
-                "Krylya Sovetov"});
-
-        main.execute("/add-head \"line 1\" Samarskaya");
-        output = main.execute("/output \"line 1\"");
-
-        checkDepots(output);
-        checkOutputLength(output, 12);
-
-        assertStations(output, new String[]{"Samarskaya", "Alabinskaya", "Rossiyskaya", "Moskovskaya",
-                "Gagarinskaya", "Sportivnaya", "Sovetskaya", "Pobeda", "Bezymyanka", "Kirovskaya", "Yungorodok",
-                "Krylya Sovetov"});
+        checkOutputLength(output, 19);
+        assertWithTransfer(output, stations);
 
         return CheckResult.correct();
     }
@@ -160,34 +170,27 @@ public class Tests extends StageTest<String> {
         String[] sOutput = output.trim().split("\n");
 
         for (int i = 0; i < stations.length; i++) {
-
-            String currentLine = sOutput[i].trim();
-            if (currentLine.split("-").length != 3) {
-                throw new WrongAnswer("There is should be 3 stations in one line.\n" +
-                    "Treat 'depot' as a station name");
+            if (!sOutput[i + 1].equals(stations[i])) {
+                throw new WrongAnswer("Can't find station '" + stations[i] + "' in the line number " + (i + 2));
             }
+        }
+    }
 
-            // Checking the first line
-            if (i == 0) {
-                for (int j = 0; j < 2; j++) {
-                    if (!currentLine.contains(stations[i + j])) {
-                        throw new WrongAnswer("Can't find station '" + stations[i + j] + "' in the line number " + (i + 1));
-                    }
+    void assertWithTransfer(String output, String[][] stations) {
+
+        String[] sOutput = output.split("\n");
+
+        for (int i = 0; i < stations.length; i++) {
+            String currentLine = sOutput[i + 1].toLowerCase().trim();
+            String currentStation = stations[i][0];
+            String currentTransfer = stations[i][1];
+            if (currentTransfer == null) {
+                if (!currentLine.equals(currentStation.toLowerCase())) {
+                    throw new WrongAnswer("There is an error in your program's reply. Some stations were not found.");
                 }
-                // Checking the last line
-            } else if (i == stations.length - 1) {
-                for (int j = 0; j < 2; j++) {
-                    if (!currentLine.contains(stations[i + j - 1])) {
-                        throw new WrongAnswer("Can't find station '" + stations[i + j - 1] + "' in the line number " + (i + 1));
-                    }
-                }
-                // Checking the rest lines
-            } else {
-                for (int j = 0; j < 3; j++) {
-                    if (!currentLine.contains(stations[i + j - 1])) {
-                        throw new WrongAnswer("Can't find station '" + stations[i + j - 1] + "' in the line number " + (i + 1));
-                    }
-                }
+            } else if (!currentLine.contains(currentStation.toLowerCase()) ||
+                !currentLine.contains(currentTransfer.toLowerCase())) {
+                throw new WrongAnswer("Expected transfer to '" + currentTransfer + "' from '" + currentStation + "' station.");
             }
         }
     }
